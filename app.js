@@ -40,7 +40,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options("/*", cors(corsOptions));
 
 // Allow small avatar images as data URLs (base64) during signup.
 app.use(express.json({ limit: "5mb" }));
