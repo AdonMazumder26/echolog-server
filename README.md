@@ -9,7 +9,7 @@ Create a `.env` locally (do not commit it). See `.env.example`.
 - `MONGO_URI`
 - `JWT_SECRET`
 - `PORT` (optional; Render sets this automatically)
-- `CORS_ORIGIN` (optional; comma-separated list or `*`)
+- `CORS_ORIGIN` (optional; comma-separated list, supports wildcards like `https://*.netlify.app`, or `*`)
 
 ## Run locally
 
