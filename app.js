@@ -3,15 +3,18 @@ const express = require("express");
 const app = express();
 
 const allowedOrigins = process.env.CORS_ORIGIN
-  ? process.env.CORS_ORIGIN.split(",").map((s) => s.trim())
-  : "*";
+  ? process.env.CORS_ORIGIN.split(",").map((s) => s.trim()).filter(Boolean)
+  : ["*"];
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  }),
-);
+// Render/other proxies set X-Forwarded-* headers
+app.set("trust proxy", 1);
+
+if (allowedOrigins.length === 1 && allowedOrigins[0] === "*") {
+  // Credentials + wildcard origin is invalid in browsers
+  app.use(cors({ origin: "*" }));
+} else {
+  app.use(cors({ origin: allowedOrigins, credentials: true }));
+}
 
 // Allow small avatar images as data URLs (base64) during signup.
 app.use(express.json({ limit: "5mb" }));
